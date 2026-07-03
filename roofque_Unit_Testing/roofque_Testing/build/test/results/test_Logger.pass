@@ -5,21 +5,21 @@
   :basename: test_Logger.c
 :successes:
 - :test: test_log_info_at_or_above_threshold_transmits_message
-  :line: 34
+  :line: 35
   :message: ''
   :unity_test_time: 0
 - :test: test_log_below_threshold_is_suppressed
-  :line: 47
+  :line: 52
   :message: ''
   :unity_test_time: 0
 - :test: test_log_error_always_transmits_even_at_ERROR_threshold
-  :line: 58
+  :line: 64
   :message: ''
   :unity_test_time: 0
 :failures: []
 :ignores:
 - :test: test_log_with_no_UART_bound_does_nothing
-  :line: 77
+  :line: 92
   :message: Needs a log_deinit()/reset hook in Logger.c to test cleanly
   :unity_test_time: 0
 :counts:
@@ -28,4 +28,4 @@
   :failed: 0
   :ignored: 1
 :stdout: []
-:time: 0.29779049998614937
+:time: 0.005274323999401531

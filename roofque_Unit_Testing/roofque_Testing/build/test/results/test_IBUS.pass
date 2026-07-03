@@ -5,15 +5,15 @@
   :basename: test_IBUS.c
 :successes:
 - :test: test_1_ibusInitialize_arms_DMA_reception
-  :line: 53
+  :line: 44
   :message: ''
   :unity_test_time: 0
 - :test: test_2_ibusUpdateData_reports_failsafe_when_no_packet_received_yet
-  :line: 69
+  :line: 58
   :message: ''
   :unity_test_time: 0
 - :test: test_3_ibusCallback_records_timestamp_and_rearms_DMA
-  :line: 91
+  :line: 81
   :message: ''
   :unity_test_time: 0
 :failures: []
@@ -24,4 +24,4 @@
   :failed: 0
   :ignored: 0
 :stdout: []
-:time: 0.36863079998875037
+:time: 0.003976555999543052

@@ -1,10 +1,9 @@
-/**
- * test_math_tools.c
+/* Pure Unity tests for the map() function in math_tools.c.
  *
- * math_tools.c la irukka map() function ku pure Unity tests.
- * Idhukku edhavadhu HAL/CAL dependency illa (no #include "CAL/CAL.h"),
- * so CMock mocking type venaame illa -- PPT-3 la paatha
- * TEST_ASSERT_EQUAL_INT variants nera use pannalaam.
+ * This function has no HAL or CAL dependencies (it does not include
+ * "CAL/CAL.h"), so there is no need to use CMock or create any mocks.
+ * We can directly use the TEST_ASSERT_EQUAL_INT variants, as shown
+ * in PPT-3.
  */
 
 #include "unity.h"
@@ -13,10 +12,15 @@
 void setUp(void) {}
 void tearDown(void) {}
 
-/* controller.c la ippadi use pannirukanga:
- *   map(channel_value, 1000, 2000, -100, 100)
- * IBUS channel raw value (1000-2000) ah -100% to +100% velocity ah convert
- * pannradhukku. Andha exact range ah vechu test pannurom.
+/* controller.c uses the map() function as follows:
+ *
+ *     map(channel_value, 1000, 2000, -100, 100)
+ *
+ * to convert the raw IBUS channel value (1000–2000) into a velocity
+ * percentage ranging from -100% to +100%.
+ *
+ * This test uses that exact input and output range to verify the
+ * expected behavior.
  */
 
 void test_map_midpoint_maps_to_zero(void)
@@ -49,8 +53,11 @@ void test_map_three_quarter_point_scales_proportionally(void)
     TEST_ASSERT_EQUAL_INT(50, result);
 }
 
-/* IBUS_MESSAGE variant example -- edhukaga fail aaguchunu clear ah sollum
- * (PPT-3 Slide 21: _MESSAGE variant) */
+/* Example of the TEST_ASSERT_*_MESSAGE variant.
+ * It provides a clear reason for the failure when the assertion
+ * does not pass (see PPT-3, Slide 21: _MESSAGE variant).
+ */
+
 void test_map_full_scale_range_MESSAGE_example(void)
 {
     long result = map(1500, 1000, 2000, 0, 100);

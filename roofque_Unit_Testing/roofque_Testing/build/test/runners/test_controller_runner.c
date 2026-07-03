@@ -128,10 +128,10 @@ static void run_test(UnityTestFunction func, const char* name, UNITY_LINE_TYPE l
   }
 #endif
   UnityBegin("test_controller.c");
-  run_test(test_controller_stops_all_motors_when_failsafe_engaged, "test_controller_stops_all_motors_when_failsafe_engaged", 98);
-  run_test(test_controller_drives_motors_at_zero_when_sticks_centered_and_brush_off, "test_controller_drives_motors_at_zero_when_sticks_centered_and_brush_off", 133);
-  run_test(test_controller_turns_on_brush_and_pump_when_brush_switch_on, "test_controller_turns_on_brush_and_pump_when_brush_switch_on", 173);
-  run_test(test_controller_stops_all_motors_when_machine_switched_off, "test_controller_stops_all_motors_when_machine_switched_off", 212);
+  run_test(test_controller_stops_all_motors_when_failsafe_engaged, "test_controller_stops_all_motors_when_failsafe_engaged", 78);
+  run_test(test_controller_drives_motors_at_zero_when_sticks_centered_and_brush_off, "test_controller_drives_motors_at_zero_when_sticks_centered_and_brush_off", 111);
+  run_test(test_controller_turns_on_brush_and_pump_when_brush_switch_on, "test_controller_turns_on_brush_and_pump_when_brush_switch_on", 149);
+  run_test(test_controller_stops_all_motors_when_machine_switched_off, "test_controller_stops_all_motors_when_machine_switched_off", 186);
 
   CMock_Guts_MemFreeFinal();
   return UNITY_END();

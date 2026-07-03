@@ -129,14 +129,14 @@ static void run_test(UnityTestFunction func, const char* name, UNITY_LINE_TYPE l
   }
 #endif
   UnityBegin("test_PMDC.c");
-  run_test(test_PMDC_init_starts_both_PWM_channels, "test_PMDC_init_starts_both_PWM_channels", 64);
-  run_test(test_PMDC_init_NULL_pointer_returns_false, "test_PMDC_init_NULL_pointer_returns_false", 78);
-  run_test(test_PMDC_setDutyCycle_positive_enables_motor_and_drives_forward, "test_PMDC_setDutyCycle_positive_enables_motor_and_drives_forward", 89);
-  run_test(test_PMDC_setDutyCycle_negative_enables_motor_and_drives_reverse, "test_PMDC_setDutyCycle_negative_enables_motor_and_drives_reverse", 120);
-  run_test(test_PMDC_setDutyCycle_zero_stops_motor, "test_PMDC_setDutyCycle_zero_stops_motor", 141);
-  run_test(test_PMDC_setDutyCycle_returns_false_for_NULL_pointer, "test_PMDC_setDutyCycle_returns_false_for_NULL_pointer", 152);
-  run_test(test_PMDC_Stop_disables_motor_and_zeroes_both_channels, "test_PMDC_Stop_disables_motor_and_zeroes_both_channels", 162);
-  run_test(test_PMDC_Destroy_stops_motor_then_stops_both_PWM_channels, "test_PMDC_Destroy_stops_motor_then_stops_both_PWM_channels", 177);
+  run_test(test_PMDC_init_starts_both_PWM_channels, "test_PMDC_init_starts_both_PWM_channels", 52);
+  run_test(test_PMDC_init_NULL_pointer_returns_false, "test_PMDC_init_NULL_pointer_returns_false", 68);
+  run_test(test_PMDC_setDutyCycle_positive_enables_motor_and_drives_forward, "test_PMDC_setDutyCycle_positive_enables_motor_and_drives_forward", 79);
+  run_test(test_PMDC_setDutyCycle_negative_enables_motor_and_drives_reverse, "test_PMDC_setDutyCycle_negative_enables_motor_and_drives_reverse", 114);
+  run_test(test_PMDC_setDutyCycle_zero_stops_motor, "test_PMDC_setDutyCycle_zero_stops_motor", 134);
+  run_test(test_PMDC_setDutyCycle_returns_false_for_NULL_pointer, "test_PMDC_setDutyCycle_returns_false_for_NULL_pointer", 145);
+  run_test(test_PMDC_Stop_disables_motor_and_zeroes_both_channels, "test_PMDC_Stop_disables_motor_and_zeroes_both_channels", 153);
+  run_test(test_PMDC_Destroy_stops_motor_then_stops_both_PWM_channels, "test_PMDC_Destroy_stops_motor_then_stops_both_PWM_channels", 166);
 
   CMock_Guts_MemFreeFinal();
   return UNITY_END();

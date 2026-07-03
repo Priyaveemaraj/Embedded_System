@@ -117,10 +117,10 @@ static void run_test(UnityTestFunction func, const char* name, UNITY_LINE_TYPE l
   }
 #endif
   UnityBegin("test_Logger.c");
-  run_test(test_log_info_at_or_above_threshold_transmits_message, "test_log_info_at_or_above_threshold_transmits_message", 34);
-  run_test(test_log_below_threshold_is_suppressed, "test_log_below_threshold_is_suppressed", 47);
-  run_test(test_log_error_always_transmits_even_at_ERROR_threshold, "test_log_error_always_transmits_even_at_ERROR_threshold", 58);
-  run_test(test_log_with_no_UART_bound_does_nothing, "test_log_with_no_UART_bound_does_nothing", 68);
+  run_test(test_log_info_at_or_above_threshold_transmits_message, "test_log_info_at_or_above_threshold_transmits_message", 35);
+  run_test(test_log_below_threshold_is_suppressed, "test_log_below_threshold_is_suppressed", 52);
+  run_test(test_log_error_always_transmits_even_at_ERROR_threshold, "test_log_error_always_transmits_even_at_ERROR_threshold", 64);
+  run_test(test_log_with_no_UART_bound_does_nothing, "test_log_with_no_UART_bound_does_nothing", 74);
 
   CMock_Guts_MemFreeFinal();
   return UNITY_END();

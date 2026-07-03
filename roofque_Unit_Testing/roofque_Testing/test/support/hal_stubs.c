@@ -1,14 +1,21 @@
-/**
- * @file hal_stubs.c
- * @brief TEST-ONLY support code. NOT part of the real firmware build.
- * See hal_stubs.h for the rationale.
+/* @file hal_stubs.c
+  @brief Test-only support code. This file is NOT part of the actual
+  firmware build. See hal_stubs.h for the rationale and implementation
+  details.
  */
+
 #include "hal_stubs.h"
 
-/* Storage for the peripheral handles controller.c references via
- * `extern`. Never dereferenced (all real HAL access happens through
- * CAL_* functions, which are always mocked in these tests) -- they
- * only need to exist as valid, distinct addresses. */
+/* Storage for the peripheral handles that controller.c references through `extern` declarations.
+ 
+  These handles are never dereferenced in the tests, since all actual
+  hardware access is performed through CAL_* functions, which are
+  always mocked.
+ 
+  They simply need to exist as valid, distinct objects so that their
+  addresses can be safely referenced.
+ */
+
 UART_HandleTypeDef huart1;
 TIM_HandleTypeDef  htim1;
 TIM_HandleTypeDef  htim3;

@@ -5,27 +5,27 @@
   :basename: test_math_tools.c
 :successes:
 - :test: test_map_midpoint_maps_to_zero
-  :line: 22
+  :line: 26
   :message: ''
   :unity_test_time: 0
 - :test: test_map_minimum_input_maps_to_minimum_output
-  :line: 28
+  :line: 32
   :message: ''
   :unity_test_time: 0
 - :test: test_map_maximum_input_maps_to_maximum_output
-  :line: 34
+  :line: 38
   :message: ''
   :unity_test_time: 0
 - :test: test_map_quarter_point_scales_proportionally
-  :line: 40
+  :line: 44
   :message: ''
   :unity_test_time: 0
 - :test: test_map_three_quarter_point_scales_proportionally
-  :line: 46
+  :line: 50
   :message: ''
   :unity_test_time: 0
 - :test: test_map_full_scale_range_MESSAGE_example
-  :line: 54
+  :line: 61
   :message: ''
   :unity_test_time: 0
 :failures: []
@@ -36,4 +36,4 @@
   :failed: 0
   :ignored: 0
 :stdout: []
-:time: 0.2628683000220917
+:time: 0.00407042100050603

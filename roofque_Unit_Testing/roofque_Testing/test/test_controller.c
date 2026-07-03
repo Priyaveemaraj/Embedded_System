@@ -1,35 +1,18 @@
 /**
- * test_controller.c
- *
- * controller.c source file ah **edhavum modify pannaame** test
- * pannradhukku, indha test file rendu special technique use pannudhu:
- *
- * 1. INFINITE LOOP ESCAPE HATCH
- *    `initializeAndRunController()` oda `for(;;)` loop, ovvoru
- *    iteration mudivilayum `HAL_Delay(50)` call pannudhu. Namba
- *    `test/support/hal_stubs.c` la `HAL_Delay()` ah intercept panni,
- *    N iterations kழிthu `longjmp()` moolama `setjmp()` panna idathukku
- *    thirumbi varom -- so andha infinite loop ah "N iterations mattum
- *    run pannitu, control ah thirumba test ku kொடு" nu safely
- *    control pannalaam.
- *
- * 2. STATIC MOTOR VARIABLES
- *    controller.c la `Left_drive_motor`, `right_drive_motor` etc ellame
- *    `static` -- test file la irundhu direct ah access panna mudiyadhu.
- *    Adhanala PMDC_* calls ah, exact pointer verify pannama
- *    (`_IgnoreArg_me()`), duty-cycle VALUE mattum verify pannurom --
- *    idhu correct behaviour dhaan, since andha motor "instances"
- *    encapsulated ah irukanumnu design ah irukku.
- *
- * 3. LOGGER CALLS
- *    controller.c la irukka `log_info(...)` / `log_error(...)` calls,
- *    REAL Logger.c moolama pogudhu (mock pannala) -- aana andha test
- *    binary la `log_init()` ஒருபோதும் call aagadhu (production la
- *    main.c thaan adha call pannum), so Logger oda internal `log_uart`
- *    NULL ah irukkும், adhanala `log_output()` edhavum transmit
- *    pannaame silent ah return aagidum. Adhanala Logger oda CAL_UART
- *    dependency ku (mock ah irundhaalum) edhavadhu expectation
- *    set panna theva illa.
+  1. INFINITE LOOP ESCAPE HATCH
+      initializeAndRunController() contains an infinite for(;;) loop, and HAL_Delay(50) is called at the end of each iteration.
+      In test/support/hal_stubs.c, we intercept HAL_Delay() and, after a predetermined number of iterations (N), use longjmp() to return to the location saved by setjmp()
+      This allows the test to run the infinite loop for only a fixed number of iterations and then safely regain control.
+
+  2. STATIC MOTOR VARIABLES
+      In controller.c, Left_drive_motor, right_drive_motor, etc., are declared as static, so they cannot be accessed directly from the test file.
+      Therefore, instead of verifying the exact pointers passed to the PMDC_* functions, we ignore the motor instance argument (_IgnoreArg_me()) and verify only the duty-cycle value.
+      This is the correct behavior because those motor instances are intentionally encapsulated as part of the design.
+ 
+  3. LOGGER CALLS
+      The log_info(...) and log_error(...) calls in controller.c go through the real Logger.c implementation (they are not mocked).
+      However, in the test binary, log_init() is never called (in production, main.c is responsible for calling it). As a result, the Logger's internal log_uart variable remains NULL, causing log_output() to return silently without transmitting anything.
+      Therefore, there is no need to set any expectations for the Logger's CAL_UART dependency, even if it is mocked.
  */
 
 #include "unity.h"
@@ -38,30 +21,29 @@
 
 #include "controller.h"
 #include "hal_stubs.h"
+/*controller.c directly calls log_info()/log_error() (from the real Logger.c) and map() (from the real math_tools.c).
+The reasoning is the same as in test_IBUS.c: Ceedling automatically links a real .c file only for a header that is explicitly included in this test file.
+Therefore, both headers are included here, even though we never call their functions directly in the test ourselves.
+*/
 
-/* controller.c calls log_info()/log_error() (real Logger.c) and
- * map() (real math_tools.c) directly. Same reasoning as test_IBUS.c:
- * Ceedling only auto-links a real .c file for a header explicitly
- * mentioned in THIS test file, so both are listed here even though
- * we never call their functions directly ourselves. */
 #include "Logger.h"
 #include "math_tools.h"
 
 #include "mock_IBUS.h"
 #include "mock_PMDC.h"
 
-/* Logger.c (real, unmocked) transitively needs CAL_UART.h / CAL_timer.h.
- * Mock them purely so Ceedling doesn't pull in the real, uncompilable-
- * on-PC CAL_UART.c/CAL_timer.c. No expectations will be set on these --
- * see note (3) above for why they're never actually called. */
+/* Logger.c (the real, unmocked implementation) has transitive dependencies on CAL_UART.h and CAL_timer.h.
+These are mocked solely to prevent Ceedling from pulling in the actual CAL_UART.c and CAL_timer.c files, which cannot be compiled on a PC environment.
+No expectations are set on these mocks, as the corresponding functions are never invoked during the test execution (see note 3 above for the explanation).*/
+
 #include "mock_CAL_UART.h"
 #include "mock_CAL_timer.h"
 #include "mock_CAL_GPIO.h"
 #include "mock_CAL_PWM.h"
 
 /* IBUS channel indices, copied from controller.c's own #defines
- * (controller.c doesn't expose them via its header, so we mirror the
- * ones relevant to our test scenarios here). */
+   (controller.c doesn't expose them via its header, so we mirror the
+   ones relevant to our test scenarios here). */
 #define IBUS_ANGULAR_CHANNEL 0
 #define IBUS_LINEAR_CHANNEL  1
 #define IBUS_MACHINE_ON_OFF  4
@@ -91,9 +73,7 @@ static ibus_packet_t make_packet(bool failsafe, uint16_t angular, uint16_t linea
     return p;
 }
 
-/* ------------------------------------------------------------------ */
-/* Scenario 1: IBUS reports failsafe engaged -> every motor must stop  */
-/* ------------------------------------------------------------------ */
+/*  Scenario 1: IBUS reports failsafe engaged -> every motor must stop  */
 
 void test_controller_stops_all_motors_when_failsafe_engaged(void)
 {
@@ -110,7 +90,7 @@ void test_controller_stops_all_motors_when_failsafe_engaged(void)
     ibusUpdateData_IgnoreArg_current_packet();
     ibusUpdateData_ReturnThruPtr_current_packet(&failsafe_packet);
 
-    /* stopALL() calls PMDC_Stop() on all four motors */
+    /* stopALL() calls PMDC_Stop() all four motors */
     PMDC_Stop_IgnoreAndReturn(true);
 
     /* Run exactly 1 loop iteration, then escape via HAL_Delay */
@@ -125,10 +105,8 @@ void test_controller_stops_all_motors_when_failsafe_engaged(void)
     TEST_PASS();
 }
 
-/* ------------------------------------------------------------------ */
-/* Scenario 2: machine ON, centered sticks -> both drive motors at 0%, */
-/* brush switch OFF -> brush & pump motors also at 0%                  */
-/* ------------------------------------------------------------------ */
+/* Scenario 2: machine ON, centered sticks -> both drive motors at 0%, 
+brush switch OFF -> brush & pump motors also at 0% */
 
 void test_controller_drives_motors_at_zero_when_sticks_centered_and_brush_off(void)
 {
@@ -166,9 +144,7 @@ void test_controller_drives_motors_at_zero_when_sticks_centered_and_brush_off(vo
     TEST_PASS();
 }
 
-/* ------------------------------------------------------------------ */
-/* Scenario 3: machine ON, brush switch ON -> brush=50%, pump=100%     */
-/* ------------------------------------------------------------------ */
+/*  Scenario 3: machine ON, brush switch ON -> brush=50%, pump=100%  */
 
 void test_controller_turns_on_brush_and_pump_when_brush_switch_on(void)
 {
@@ -205,9 +181,7 @@ void test_controller_turns_on_brush_and_pump_when_brush_switch_on(void)
     TEST_PASS();
 }
 
-/* ------------------------------------------------------------------ */
-/* Scenario 4: machine OFF -> stopALL(), even though failsafe is false */
-/* ------------------------------------------------------------------ */
+/* Scenario 4: machine OFF -> stopALL(), even though failsafe is false  */
 
 void test_controller_stops_all_motors_when_machine_switched_off(void)
 {

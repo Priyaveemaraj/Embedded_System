@@ -1,6 +1,6 @@
 #include "IBUS.h"
 #include "Modules/Utilities/Logger/Logger.h"
-
+#include <stddef.h>
 
 #define IBUS_PACKET_LENGTH 0x20
 #define IBUS_START_BYTE    0x20

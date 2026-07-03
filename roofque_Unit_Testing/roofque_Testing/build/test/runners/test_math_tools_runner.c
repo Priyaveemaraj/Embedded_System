@@ -106,12 +106,12 @@ static void run_test(UnityTestFunction func, const char* name, UNITY_LINE_TYPE l
   }
 #endif
   UnityBegin("test_math_tools.c");
-  run_test(test_map_midpoint_maps_to_zero, "test_map_midpoint_maps_to_zero", 22);
-  run_test(test_map_minimum_input_maps_to_minimum_output, "test_map_minimum_input_maps_to_minimum_output", 28);
-  run_test(test_map_maximum_input_maps_to_maximum_output, "test_map_maximum_input_maps_to_maximum_output", 34);
-  run_test(test_map_quarter_point_scales_proportionally, "test_map_quarter_point_scales_proportionally", 40);
-  run_test(test_map_three_quarter_point_scales_proportionally, "test_map_three_quarter_point_scales_proportionally", 46);
-  run_test(test_map_full_scale_range_MESSAGE_example, "test_map_full_scale_range_MESSAGE_example", 54);
+  run_test(test_map_midpoint_maps_to_zero, "test_map_midpoint_maps_to_zero", 26);
+  run_test(test_map_minimum_input_maps_to_minimum_output, "test_map_minimum_input_maps_to_minimum_output", 32);
+  run_test(test_map_maximum_input_maps_to_maximum_output, "test_map_maximum_input_maps_to_maximum_output", 38);
+  run_test(test_map_quarter_point_scales_proportionally, "test_map_quarter_point_scales_proportionally", 44);
+  run_test(test_map_three_quarter_point_scales_proportionally, "test_map_three_quarter_point_scales_proportionally", 50);
+  run_test(test_map_full_scale_range_MESSAGE_example, "test_map_full_scale_range_MESSAGE_example", 61);
 
   return UNITY_END();
 }

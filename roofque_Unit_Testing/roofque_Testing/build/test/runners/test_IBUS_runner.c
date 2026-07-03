@@ -115,9 +115,9 @@ static void run_test(UnityTestFunction func, const char* name, UNITY_LINE_TYPE l
   }
 #endif
   UnityBegin("test_IBUS.c");
-  run_test(test_1_ibusInitialize_arms_DMA_reception, "test_1_ibusInitialize_arms_DMA_reception", 53);
-  run_test(test_2_ibusUpdateData_reports_failsafe_when_no_packet_received_yet, "test_2_ibusUpdateData_reports_failsafe_when_no_packet_received_yet", 69);
-  run_test(test_3_ibusCallback_records_timestamp_and_rearms_DMA, "test_3_ibusCallback_records_timestamp_and_rearms_DMA", 91);
+  run_test(test_1_ibusInitialize_arms_DMA_reception, "test_1_ibusInitialize_arms_DMA_reception", 44);
+  run_test(test_2_ibusUpdateData_reports_failsafe_when_no_packet_received_yet, "test_2_ibusUpdateData_reports_failsafe_when_no_packet_received_yet", 58);
+  run_test(test_3_ibusCallback_records_timestamp_and_rearms_DMA, "test_3_ibusCallback_records_timestamp_and_rearms_DMA", 81);
 
   CMock_Guts_MemFreeFinal();
   return UNITY_END();
